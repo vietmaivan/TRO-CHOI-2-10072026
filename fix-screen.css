@@ -1,0 +1,13 @@
+/* ============================================
+   UTILITIES
+   ============================================ */
+.screen {
+    display: none !important;
+    min-height: 100vh;
+    animation: fadeIn 0.4s ease;
+}
+
+.screen.active {
+    display: flex !important;
+    flex-direction: column;
+}
