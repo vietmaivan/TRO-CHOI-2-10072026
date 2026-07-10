@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trò Chơi Hình Khối Toán Học</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Welcome Screen -->
+        <div id="welcome-screen" class="screen">
+            <div class="welcome-container">
+                <!-- Top Bar -->
+                <div class="top-bar">
+                    <div class="status-indicator">
+                        <span class="pulse-dot"></span>
+                        <span class="status-text">Trực tuyến - Sẵn sàng gửi điểm</span>
+                    </div>
+                    <button id="toggle-sound-btn" class="sound-btn" title="Bật/Tắt âm thanh">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                            <path d="M15.54 8.46a7 7 0 0 1 0 9.9"></path>
+                            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Main Content -->
+                <div class="welcome-content">
+                    <div class="welcome-left">
+                        <div class="welcome-badge">☀️ Bé học toán siêu vui!</div>
+                        <h1 class="welcome-title">Trò Chơi <span class="gradient-text">Hình Khối Toán Học</span></h1>
+                        <p class="welcome-description">
+                            Chào mừng bé đến với thế giới hình học diệu kỳ! Cùng nhận diện, đếm hình khối và thử tài thông minh để tích điểm gửi thầy cô nhé!
+                        </p>
+                        
+                        <div class="floating-shapes">
+                            <div class="shape-item bounce" style="--delay: 0s">
+                                <div class="shape shape-cube">■</div>
+                                <span class="shape-label">Lập phương</span>
+                            </div>
+                            <div class="shape-item bounce" style="--delay: 0.5s">
+                                <div class="shape shape-sphere">●</div>
+                                <span class="shape-label">Khối cầu</span>
+                            </div>
+                            <div class="shape-item bounce" style="--delay: 0.2s">
+                                <div class="shape shape-cylinder">⬡</div>
+                                <span class="shape-label">Khối trụ</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="welcome-right">
+                        <!-- Login Form -->
+                        <div class="form-card">
+                            <h2 class="form-title">🏆 Bé nhập thông tin chơi nhé</h2>
+                            <form id="login-form" class="login-form">
+                                <div class="form-group">
+                                    <label for="player-name">Họ và tên của bé:</label>
+                                    <div class="input-wrapper">
+                                        <input type="text" id="player-name" placeholder="Ví dụ: Nguyễn Văn An" class="form-input">
+                                    </div>
+                                    <span class="error-message" id="error-name"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="player-class">Lớp học của bé:</label>
+                                    <div class="input-wrapper">
+                                        <input type="text" id="player-class" placeholder="Ví dụ: Lớp 2A, Lớp 3B" class="form-input">
+                                    </div>
+                                    <span class="error-message" id="error-class"></span>
+                                </div>
+
+                                <button type="submit" class="btn-start">
+                                    <span>Bắt Đầu Chơi Ngay</span>
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                    </svg>
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Quick Stats -->
+                        <div id="quick-stats" class="quick-stats" style="display: none;">
+                            <div class="stat-item">
+                                <div class="stat-icon">🏆</div>
+                                <div>
+                                    <div class="stat-label">Điểm cao nhất</div>
+                                    <div class="stat-value" id="highest-score">0đ</div>
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-icon">📚</div>
+                                <div>
+                                    <div class="stat-label">Lượt chơi</div>
+                                    <div class="stat-value" id="total-games">0 lượt</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- History Table -->
+                <div id="history-section" class="history-section" style="display: none;">
+                    <h3 class="history-title">🏆 Lịch Sử Luyện Tập Của Bé</h3>
+                    <div class="table-wrapper">
+                        <table class="history-table" id="history-table">
+                            <thead>
+                                <tr>
+                                    <th>Tên</th>
+                                    <th>Lớp</th>
+                                    <th>Số điểm</th>
+                                    <th>Đúng / Sai</th>
+                                    <th>Thời gian</th>
+                                    <th>Ngày chơi</th>
+                                    <th>Trạng thái gửi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="history-tbody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="welcome-footer">
+                    © Trò chơi hình học tương tác - Trực quan, giáo dục và hào hứng!
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="game-screen" class="screen" style="display: none;">
+            <div class="game-header">
+                <div class="player-info">
+                    <span class="badge badge-class">Lớp: <span id="game-class"></span></span>
+                    <span class="player-name">Bé: <span id="game-name"></span></span>
+                </div>
+                <div class="game-stats">
+                    <div class="stat-box score-box">
+                        <span class="stat-icon">🏅</span>
+                        <span class="stat-label">Điểm:</span>
+                        <span class="stat-value" id="live-score">0đ</span>
+                    </div>
+                    <div class="stat-box timer-box" id="timer-box">
+                        <span class="stat-icon">⏱️</span>
+                        <span class="timer-value" id="timer">30</span><span>s</span>
+                    </div>
+                    <button id="toggle-sound-game" class="sound-btn-game"></button>
+                </div>
+            </div>
+
+            <div class="progress-bar-container">
+                <div class="progress-info">
+                    <span id="question-counter">1/15</span>
+                    <span id="level-badge" class="level-badge"></span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+            </div>
+
+            <div class="game-content">
+                <div class="game-left">
+                    <div class="shape-container" id="shape-container">
+                        <!-- Shape SVG will be inserted here -->
+                    </div>
+                    <span class="shape-label-hint">Hình minh họa trực quan</span>
+                </div>
+
+                <div class="game-right">
+                    <div class="question-box" id="question-box"></div>
+                    <div class="options-grid" id="options-grid"></div>
+                    <div id="feedback-box" class="feedback-box" style="display: none;"></div>
+                </div>
+            </div>
+
+            <div class="game-footer">
+                <span>Bé hãy điền đáp án thật cẩn thận nhé!</span>
+                <button id="btn-early-submit" class="btn-early-submit">🚩 Nộp bài sớm</button>
+            </div>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="result-screen" class="screen" style="display: none;">
+            <div class="result-container">
+                <!-- Victory Card -->
+                <div class="victory-card">
+                    <div class="trophy-icon">🏆</div>
+                    <h2>Hoàn Thành Luyện Tập!</h2>
+                    <p class="player-congratulation">Cảm ơn bé <span id="result-name"></span> - Lớp <span id="result-class"></span></p>
+
+                    <!-- Achievement Badge -->
+                    <div class="achievement-section">
+                        <div class="achievement-badge" id="achievement-badge"></div>
+                        <p class="achievement-description" id="achievement-description"></p>
+                    </div>
+
+                    <!-- Score Metrics -->
+                    <div class="metrics-grid">
+                        <div class="metric">
+                            <span class="metric-label">Số điểm đạt</span>
+                            <span class="metric-value" id="final-score">0</span>
+                            <span class="metric-unit">/ 255đ</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Số câu đúng</span>
+                            <span class="metric-value green" id="final-correct">0</span>
+                            <span class="metric-unit">câu</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Số câu sai</span>
+                            <span class="metric-value red" id="final-incorrect">0</span>
+                            <span class="metric-unit">câu</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Thời gian chơi</span>
+                            <span class="metric-value" id="final-time">0</span>
+                            <span class="metric-unit">giây</span>
+                        </div>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="result-buttons">
+                        <button id="btn-submit-sheet" class="btn-submit-sheet">📤 Gửi điểm lên Google Sheet</button>
+                        <button id="btn-restart" class="btn-restart">🔄 Chơi lại lượt mới</button>
+                    </div>
+
+                    <div id="submit-feedback" class="submit-feedback" style="display: none;"></div>
+                </div>
+
+                <!-- Review Section -->
+                <div class="review-card">
+                    <button id="btn-toggle-review" class="review-header">
+                        <span>🏅 Xem lại câu hỏi và lời giải chi tiết</span>
+                        <span class="chevron">▼</span>
+                    </button>
+                    <div id="review-content" class="review-content" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
